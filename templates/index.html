@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        h1 { color: #333; }
+        .chart-container { max-width: 800px; margin: 0 auto; }
+    </style>
+</head>
+<body>
+    <h1>Monthly Sales Dashboard</h1>
+    <div class="chart-container">
+        {{ graph_html | safe }}
+    </div>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</body>
+</html>
