@@ -1,0 +1,1 @@
+from sales_dashboard import app as application
