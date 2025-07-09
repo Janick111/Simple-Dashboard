@@ -8,12 +8,32 @@
         body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
         h1 { color: #333; }
         .chart-container { max-width: 800px; margin: 0 auto; }
+        .overview { margin-bottom: 20px; }
+        .metric { font-size: 1.2em; margin: 10px 0; }
     </style>
 </head>
 <body>
-    <h1>Monthly Sales Dashboard</h1>
+    <h1>Sales Dashboard</h1>
+    <div class="overview">
+        <div class="metric">Total Sales: €{{ total_sales }}</div>
+        <div class="metric">Average Sales: €{{ average_sales }}</div>
+        <div class="metric">Max Sales: €{{ max_sales }}</div>
+        <div class="metric">Min Sales: €{{ min_sales }}</div>
+    </div>
+    <form method="post">
+        <label for="view">Select View:</label>
+        <select name="view" id="view" onchange="this.form.submit()">
+            <option value="monthly" {% if view == 'monthly' %}selected{% endif %}>Monthly</option>
+            <option value="yearly" {% if view == 'yearly' %}selected{% endif %}>Yearly</option>
+        </select>
+    </form>
     <div class="chart-container">
-        {{ graph_html | safe }}
+        <h2>Bar Chart</h2>
+        {{ bar_graph_html | safe }}
+    </div>
+    <div class="chart-container">
+        <h2>Line Chart</h2>
+        {{ line_graph_html | safe }}
     </div>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </body>
