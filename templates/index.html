@@ -1,40 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Dashboard</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        h1 { color: #333; }
-        .chart-container { max-width: 800px; margin: 0 auto; }
-        .overview { margin-bottom: 20px; }
-        .metric { font-size: 1.2em; margin: 10px 0; }
-    </style>
-</head>
-<body>
-    <h1>Sales Dashboard</h1>
-    <div class="overview">
-        <div class="metric">Total Sales: €{{ total_sales }}</div>
-        <div class="metric">Average Sales: €{{ average_sales }}</div>
-        <div class="metric">Max Sales: €{{ max_sales }}</div>
-        <div class="metric">Min Sales: €{{ min_sales }}</div>
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Sales Dashboard{% endblock %}
+
+{% block styles %}
+{{super()}}
+<style>
+    .metric {
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    .metric-value {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center mt-4 mb-4">Sales Dashboard</h1>
+    
+    <div class="row">
+        <div class="col-md-3">
+            <div class="metric">
+                <h4>Total Sales</h4>
+                <div class="metric-value">€{{ "{:,.2f}".format(total_sales) }}</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="metric">
+                <h4>Average Sales</h4>
+                <div class="metric-value">€{{ "{:,.2f}".format(average_sales) }}</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="metric">
+                <h4>Max Sales</h4>
+                <div class="metric-value">€{{ "{:,.2f}".format(max_sales) }}</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="metric">
+                <h4>Min Sales</h4>
+                <div class="metric-value">€{{ "{:,.2f}".format(min_sales) }}</div>
+            </div>
+        </div>
     </div>
-    <form method="post">
-        <label for="view">Select View:</label>
-        <select name="view" id="view" onchange="this.form.submit()">
-            <option value="monthly" {% if view == 'monthly' %}selected{% endif %}>Monthly</option>
-            <option value="yearly" {% if view == 'yearly' %}selected{% endif %}>Yearly</option>
-        </select>
+
+    <form method="post" class="mb-4">
+        <div class="form-group">
+            <label for="view">Select View:</label>
+            <select name="view" id="view" class="form-control" onchange="this.form.submit()">
+                <option value="monthly" {% if view == 'monthly' %}selected{% endif %}>Monthly</option>
+                <option value="yearly" {% if view == 'yearly' %}selected{% endif %}>Yearly</option>
+            </select>
+        </div>
     </form>
-    <div class="chart-container">
-        <h2>Bar Chart</h2>
+
+    <div class="chart-container mb-4">
+        <h2 class="text-center">Bar Chart</h2>
         {{ bar_graph_html | safe }}
     </div>
-    <div class="chart-container">
-        <h2>Line Chart</h2>
+
+    <div class="chart-container mb-4">
+        <h2 class="text-center">Line Chart</h2>
         {{ line_graph_html | safe }}
     </div>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-</body>
-</html>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+{% endblock %}
